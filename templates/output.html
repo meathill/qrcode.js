@@ -1,0 +1,21 @@
+<script src="//demo.meathill.net/qrcode/qrcode.js"></script>
+<script>;
+  var qr = qrcode(4, 'H');
+  qr.addData('{{url}}');
+  qr.make();
+  {{#if target}}
+  document.getElementById('{{target}}').innerHTML = qr.createImgTag({{width}}, 0);
+  {{else}}
+  QR = QR || {count: 0}
+  var div = document.createElement('div'),
+      img = qr.createImgTag({{width}}, 0),
+      p = document.createElement('p');
+  div.id = 'qrcode' + QR.count;
+  div.className = 'qrcode';
+  p.innerHTML = '{{label}}';
+  div.appendChild(img);
+  div.appendChild(p);
+  document.appendChild(div);
+  QR.count++;
+  {{/if}}
+</script>

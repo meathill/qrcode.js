@@ -16,6 +16,10 @@
 
 当然离不开[jQuery](http://jquery.com/)这个优秀的工具。
 
+HTML对剪切板的操作也太弱，所以“复制到粘贴版”使用了[ZeroClipboard](https://github.com/jonrohan/ZeroClipboard)。
+
+生成的代码使用[Handlebars.js](http://handlebarsjs.com/)来处理。
+
 感谢以上的工作以及分享精神。
 
 # 开源协议

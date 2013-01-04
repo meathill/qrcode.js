@@ -12,6 +12,8 @@
 <link href="css/style.css" rel="stylesheet" />
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+<script src="libs/handlebars-1.0.rc.1.js"></script>
+<script src="libs/ZeroClipboard.min.js"></script>
 <script src="libs/qrcode.js"></script>
 <script src="js/main.js"></script>
 <script type="text/javascript">
@@ -45,13 +47,16 @@
     <p>完成后面的表单，把文本框的代码复制到页面中即可。</p>
   </div>
   <div class="row">
-    <div class="span3">
+    <div class="span3 well">
       <h3>结果代码</h3>
-      <textarea id="output" readonly="readonly"></textarea>
+      <textarea id="output" readonly="readonly" rows="6">
+加载HTML模版
+      </textarea>
+      <button type="button" class="btn btn-success" id="copy-button" title="将生成的代码复制到剪切板">复制到剪切板</button>
       <hr />
       <h3>预览图</h3>
       <p id="preview">
-        
+
       </p>
     </div>
     <div class="span9">
@@ -66,11 +71,15 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="width">宽高</label>
+          <label class="control-label" for="width">描点大小</label>
           <div class="controls">
-            <input type="number" name="width" id="width" class="input-small" value="100" />
-            &times;
-            <input type="number" name="height" id="height" class="input-small" value="100" />
+            <div class="input-append">
+              <input type="number" name="width" id="width" class="input-small" value="4" />
+              <span class="add-on">像素</span>
+            </div>
+            <p class="help-block">
+              图像尺寸 = 点大小 * 33，当前为<span>132&times;132</span>
+            </p>
           </div>
         </div>
         <div class="control-group">
@@ -83,9 +92,9 @@
         <div class="control-group dom">
           <label class="control-label" for="target">节点ID</label>
           <div class="controls">
-            <input type="text" name="target" id="target" class="input-xlarge" />
+            <input type="text" name="target" id="target" class="input-xlarge" value="target" />
             <p class="help-block">
-              呈现二维码的页面节点元素的ID
+              呈现二维码的页面节点元素的ID，不需要“#”
             </p>
           </div>
         </div>
@@ -99,7 +108,7 @@
         <div class="control-group float">
           <label class="control-label" for="label">文字描述</label>
           <div class="controls">
-            <input type="text" name="label" id="label" class="input-large" />
+            <input type="text" name="label" id="label" class="input-large" value="请扫描二维码" />
           </div>
         </div>
         <div class="form-actions">
