@@ -3,16 +3,141 @@
 配置生成一段js，复制到页面当中，就可以给页面添加一个二维码的图了
 -->
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>肉山二维码工具</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
-    <script src="libs/qrcode.js"></script>
-  </head>
-  <body>
-    <div>TODO write content</div>
-  </body>
-</html>
+<title>肉山二维码工具</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="keywords" content="二维码,生成工具,开源,肉山" />
+<meta name="description" content="这是个方便的小工具，提供所见即所得的操作界面，不仅能够控制生成二维码，还可以调整页面布局，方便使用。最终只需要将生成的JS代码复制到您的页面当中，就完成了。">
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet" />
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+<script src="libs/qrcode.js"></script>
+<script src="js/main.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26694288-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">肉山 | 二维码</a>
+      <ul class="nav">
+        <li><a href="#custom-style" data-toggle="modal">定制样式</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container ">
+  <div class="hero-unit">
+    <h1>二维码生成器</h1>
+    <p>完成后面的表单，把文本框的代码复制到页面中即可。</p>
+  </div>
+  <div class="row">
+    <div class="span3">
+      <h3>结果代码</h3>
+      <textarea id="output" readonly="readonly"></textarea>
+      <hr />
+      <h3>预览图</h3>
+      <p id="preview">
+        
+      </p>
+    </div>
+    <div class="span9">
+      <form class="form-horizontal dom">
+        <div class="control-group">
+          <label class="control-label" for="url">链接</label>
+          <div class="controls">
+            <input type="text" name="url" id="url" class="input-xlarge" />
+            <p class="help-block">
+              留空的话，将使用嵌入页面的URL生成二维码
+            </p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="width">宽高</label>
+          <div class="controls">
+            <input type="number" name="width" id="width" class="input-small" value="100" />
+            &times;
+            <input type="number" name="height" id="height" class="input-small" value="100" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">位置设定</label>
+          <div class="controls btn-group" data-toggle="buttons-radio">
+            <button type="button" class="btn active target-button" value="dom">页面元素</button>
+            <button type="button" class="btn target-button" value="float">独立浮动</button>
+          </div>
+        </div>
+        <div class="control-group dom">
+          <label class="control-label" for="target">节点ID</label>
+          <div class="controls">
+            <input type="text" name="target" id="target" class="input-xlarge" />
+            <p class="help-block">
+              呈现二维码的页面节点元素的ID
+            </p>
+          </div>
+        </div>
+        <div class="control-group float">
+          <label class="control-label">浮动位置</label>
+          <div class="controls btn-group" data-toggle="buttons-radio">
+            <button type="button" class="btn" value="left">页面左侧</button>
+            <button type="button" class="btn active" value="right">页面右侧</button>
+          </div>
+        </div>
+        <div class="control-group float">
+          <label class="control-label" for="label">文字描述</label>
+          <div class="controls">
+            <input type="text" name="label" id="label" class="input-large" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-primary preview-button">刷新预览图</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal-cave">
+  <div class="modal fade hide" id="custom-style">
+    <div class="modal-header">
+      <button class="close" type="button" data-dismiss="modal">&times</button>
+      <h3>如何定制样式</h3>
+    </div>
+    <div class="modal-body">
+      <p>插入页面中的二维码会包裹在特定HTML当中，所以如果需要定制样式，可以用在CSS当中使用特定的class和id做到。</p>
+      <h4>页面元素</h4>
+      <p><code>&lt;img class="qrcode" /&gt;</code></p>
+      <h4>独立浮动</h4>
+      <p>
+        <code>&lt;div class="qrcode" id="qrcode-n"&gt;....&lt;/div&gt;</code><br />
+        （-n的n为序号，为自然数，按照添加的顺序自增）
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">好的，知道了</button>
+    </div>
+  </div>
+</div>
+
+<footer class="container">
+  <hr />
+  <p class="pull-right">
+    <a href="//blog.meathill.net/" target="_blank"><i class="icon-share"></i> Blog</a>
+    &nbsp;
+    <a href="mailto:meathill@foxmail.com"><i class="icon-envelope"></i> Email</a>
+  </p>
+  <p>&copy; Meathill 2013</p>
+</footer>

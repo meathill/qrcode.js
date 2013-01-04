@@ -1,0 +1,20 @@
+/* 
+    Document   : style
+    Created on : 2013-1-4, 17:26:44
+    Author     : meathill
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.sidebar {
+  background:#F0F0F0;
+}
+.controls.btn-group {
+  display:block;
+}
+.dom .float {
+  display:none;
+}
+.float .dom {
+  display:none;
+}
