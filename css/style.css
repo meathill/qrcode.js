@@ -10,11 +10,11 @@
   font-family: Microsoft Yahei, Simhei;
 }
 
-.span3.well {
-  width:230px;
+.span4.well {
+  width:260px;
 }
 #output {
-  width:216px;
+  width:246px;
   font:9px/14px Arial;
 }
 

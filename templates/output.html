@@ -1,4 +1,4 @@
-<script src="//demo.meathill.net/qrcode/qrcode.js"></script>
+<script src="//meatqr.sinaapp.com/qrcode.js"></script>
 <script>;
   var qr = qrcode(4, 'H');
   qr.addData('{{url}}');
@@ -19,3 +19,6 @@
   QR.count++;
   {{/if}}
 </script>
+{{#unless target}}
+<link rel="stylesheet" href="//meatqr.sinaapp.com/qrcode.css" />
+{{/if}}
