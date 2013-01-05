@@ -1,6 +1,7 @@
+"use strict";
 $(function () {
   function createQrcode(url) {
-    var qr = qrcode(4, 'H');
+    var qr = qrcode(4, 'M');
     qr.addData(url);
     qr.make();
     
@@ -12,6 +13,9 @@ $(function () {
     $('#preview')
       .empty()
       .append(img);
+    $('#qrcode')
+      .find('img').replaceWith(img)
+      .end().find('p').text($('#label').val());
   }
   function refreshCode() {
     if (template === null) {
@@ -21,7 +25,7 @@ $(function () {
       url: $('#url').val(),
       width: $('#width').val(),
       target: $('button[value=dom]').hasClass('active') ? $('#target').val() : null,
-      label: $('#label').val(),
+      label: $('#label').val()
     };
     $('#output').val(template(context));
   }
@@ -29,11 +33,26 @@ $(function () {
   $('form')
     .on('click', '.preview-button', function (event) {
       refreshPreview();
+      refreshCode();
     })
     .on('click', '.target-button', function (event) {
       $('form')
         .removeClass('dom float')
         .addClass(this.value);
+      if (this.value === 'dom') {
+        $('#preview').show();
+        $('#qrcode').remove();
+        $('#preview-pos').addClass('hide');
+      } else {
+        var qrcode = $('<div id="qrcode" class="qrcode"></div>');
+        qrcode
+          .append($('#preview').children().clone())
+          .append('<p align="center">' + $('#label').val() + '</p>')
+          .appendTo('body');
+        $('#preview').hide();
+        $('#preview-pos').removeClass('hide');
+      }
+      setTimeout(refreshCode, 10);
     })
     .on('change', '#width', function (event) {
       var width = this.value * 33;
@@ -41,6 +60,7 @@ $(function () {
     })
     .on('change', 'input', function (event) {
       refreshPreview();
+      refreshCode();
     });
   
   // 处理剪切板
@@ -53,8 +73,7 @@ $(function () {
     alert('复制成功');
   });
 
-  // 默认也要有个二维码
-  $('#url').val(location.href);
+  // 生成默认二维码
   refreshPreview();
   
   // 加载输出模版
@@ -65,7 +84,7 @@ $(function () {
     success: function (response) {
       template = Handlebars.compile(response);
       refreshCode();
-    },
+    }
   });
 });
 
