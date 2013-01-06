@@ -60,13 +60,16 @@
       <sources dir="libs/">
         <file name="qrcode.js" />
       </sources>
+      <sources dir="js/">
+        <file name="insert.js" />
+      </sources>
+      
     </jscomp>
     <jscomp compilationLevel="simple" warning="default" debug="false" output="${dist}/js/main.js" encoding="UTF-8">
       <warning group="internetExplorerChecks" level="OFF" />
       <warning group="globalThis" level="OFF" />
       <sources dir="js/">
         <file name="main.js" />
-        <file name="insert.js" />
       </sources>
     </jscomp>
   </target>
