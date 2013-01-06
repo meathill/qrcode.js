@@ -11,7 +11,13 @@
   </target>
   
   <target name="-copy.html.files">
+    <tstamp>
+      <format property="build.time" pattern="MMddHHmm" />
+    </tstamp>
     <copy file="index.html" todir="${dist}" />
+    <replace file="${dist}/index.html" encoding="UTF-8">
+      <replacefilter token="@version@" value="${build.time}" />
+    </replace>
   </target>
   
   <target name="-compile.css.files">
