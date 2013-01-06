@@ -8,7 +8,8 @@ $(function () {
     return qr.createImgTag($('#width').val(), 0);
   }
   function refreshPreview() {
-    var url = $('#url').val().replace(/^[\s\u3000]+|[\s\u3000]+$/g, ''),
+    var url = $('#url').val(),
+        url = url === '' ? location.href : url.replace(/^[\s\u3000]+|[\s\u3000]+$/g, ''),
         img = createQrcode(url);
     $('#preview')
       .empty()

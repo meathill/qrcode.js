@@ -33,7 +33,7 @@
 
 <div class="navbar">
   <div class="navbar-inner">
-    <div class="container">
+    <div class="container row">
       <a class="brand" href="#">肉山 | 二维码</a>
       <ul class="nav">
         <li><a href="#custom-style" data-toggle="modal">定制样式</a></li>
@@ -89,16 +89,16 @@
         <div class="control-group">
           <label class="control-label">位置设定</label>
           <div class="controls btn-group" data-toggle="buttons-radio">
-            <button type="button" class="btn active target-button" value="dom">页面元素</button>
-            <button type="button" class="btn target-button" value="float">独立浮动</button>
+            <button type="button" class="btn active target-button" value="dom" title="插入到页面特定位置中，需提供容器元素的ID">页面元素</button>
+            <button type="button" class="btn target-button" value="float" title="产生一个独立的浮动层，位于页面右上角">独立浮动</button>
           </div>
         </div>
         <div class="control-group dom">
-          <label class="control-label" for="target">节点ID</label>
+          <label class="control-label" for="target">容器ID</label>
           <div class="controls">
             <input type="text" name="target" id="target" class="input-xlarge" value="target" />
             <p class="help-block">
-              呈现二维码的页面节点元素的ID，不需要“#”
+              插入二维码图片的页面元素的ID，不需要“#”
             </p>
           </div>
         </div>
