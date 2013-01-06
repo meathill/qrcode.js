@@ -1,36 +1,7 @@
 <script src="//meatqr.sinaapp.com/libs/qrcode.js"></script>
 <script>;
-  if (window.addEventListener) {
-    window.addEventListener('load', insertQrcode, false);
-  } else if (window.attachEvent) {
-    window.attachEvent('onload', insertQrcode);
-  }
-  function insertQrcode() {
-    var url = '{{url}}' || location.href,
-        qr = qrcode(4, 'M');
-    qr.addData(url);
-    qr.make();
-    {{#if target}}
-    document.getElementById('{{target}}').innerHTML = qr.createImgTag({{width}}, 0);
-    {{else}}
-    var div = document.createElement('div'),
-        img = qr.createImgTag({{width}}, 0),
-        p = document.createElement('p');
-    div.id = 'qrcode';
-    div.className = 'qrcode';
-    p.innerHTML = '{{label}}';
-    p.align = 'center';
-    div.innerHTML = img;
-    div.appendChild(p);
-    document.body.appendChild(div);
-    {{/if}}
-        
-    if (window.removeEventListener) {
-      window.removeEventListener('load', insertQrcode, false);
-    } else if (window.detachEvent) {
-      window.detachEvent('onload', insertQrcode);
-    }
-  }
+  // 作者：肉山 meathill@qq.com 2013
+  MH.insertQrcode('{{url}}', {{width}}, '{{target}}', '{{label}}');
 </script>
 {{#unless target}}
 <link rel="stylesheet" href="//meatqr.sinaapp.com/css/qrcode.css" />

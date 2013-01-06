@@ -13,6 +13,7 @@
   position: fixed;
   right:10px;
   top:10px;
+  border-radius:4px;
 }
 .qrcode p {
   margin:10px 0 0;

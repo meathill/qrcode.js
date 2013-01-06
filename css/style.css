@@ -18,12 +18,11 @@
   font:9px/14px Arial;
 }
 
-.controls.btn-group {
-  display:block;
+.controls .alert {
+  font:12px/18px Helvetica, Simsun;
+  margin: 10px 0 0;
 }
-.dom .float {
-  display:none;
-}
+.dom .float,
 .float .dom {
   display:none;
 }

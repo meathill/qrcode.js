@@ -66,6 +66,7 @@
       <warning group="globalThis" level="OFF" />
       <sources dir="js/">
         <file name="main.js" />
+        <file name="insert.js" />
       </sources>
     </jscomp>
   </target>

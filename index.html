@@ -33,13 +33,14 @@
 
 <div class="navbar">
   <div class="navbar-inner">
-    <div class="container row">
-      <a class="brand" href="#version" title="0.1.@version@">肉山 | 二维码</a>
-      <ul class="nav">
-        <li><a href="#custom-style" data-toggle="modal">定制样式</a></li>
-        <li><a href="http://meathill.github.com/qrcode.js">源代码</a></li>
-      </ul>
-    </div>
+    <a class="brand" href="http://blog.meathill.net/">肉山 | 二维码</a>
+    <ul class="nav">
+      <li><a href="#custom-style" data-toggle="modal">定制样式</a></li>
+      <li><a href="http://meathill.github.com/qrcode.js">源代码</a></li>
+    </ul>
+    <ul class="nav pull-right">
+      <li><a href="https://github.com/meathill/qrcode.js/issues">Version 0.2.@version@</a></li>
+    </ul>
   </div>
 </div>
 
@@ -54,7 +55,7 @@
       <textarea id="output" readonly="readonly" rows="6">
 加载HTML模版
       </textarea>
-      <button type="button" class="btn btn-success" id="copy-button" title="将生成的代码复制到剪切板">复制到剪切板</button>
+      <button type="button" class="btn btn-success" id="copy-button" title="将生成的代码复制到剪切板"><i class="icon-file icon-white"></i> 复制到剪切板</button>
       <hr />
       <h3>预览</h3>
       <span class="text-info hide" id="preview-pos">（位于右上角）</span>
@@ -88,9 +89,16 @@
         </div>
         <div class="control-group">
           <label class="control-label">位置设定</label>
-          <div class="controls btn-group" data-toggle="buttons-radio">
-            <button type="button" class="btn active target-button" value="dom" title="插入到页面特定位置中，需提供容器元素的ID">页面元素</button>
-            <button type="button" class="btn target-button" value="float" title="产生一个独立的浮动层，位于页面右上角">独立浮动</button>
+          <div class="controls">
+            <div class="btn-group" data-toggle="buttons-radio">
+              <button type="button" class="btn active target-button" value="dom">页面元素</button>
+              <button type="button" class="btn target-button" value="float">独立浮动</button>
+            </div>
+            <div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              选择“页面元素”，意味着您希望把二维码插入到页面某特定位置，此时您需要提供容器元素的ID；<br />
+              选择“独立浮动”，程序会帮你创建一个浮动层，置于页面右上角，并把二维码放在里面。
+            </div>
           </div>
         </div>
         <div class="control-group dom">
@@ -112,7 +120,7 @@
           </div>
         </div>
         <div class="form-actions">
-          <button type="button" class="btn btn-primary preview-button">刷新预览图</button>
+          <button type="button" class="btn btn-primary preview-button"><i class="icon-refresh icon-white"></i> 刷新预览图</button>
         </div>
       </form>
     </div>

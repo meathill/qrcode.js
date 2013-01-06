@@ -8,6 +8,10 @@
 
 代码中使用了data URIs，不支持IE6,7。
 
+# 试用地址
+
+[http://meatqr.sinaapp.com/](http://meatqr.sinaapp.com/)
+
 # 引用说明
 
 此工具中的二维码逻辑实现，取自Kazuhiko Arase先生的工作。他的网站是 [http://www.d-project.com/](http://www.d-project.com/)。
