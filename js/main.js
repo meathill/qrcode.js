@@ -8,15 +8,14 @@ $(function () {
     return qr.createImgTag($('#width').val(), 0);
   }
   function refreshPreview() {
-    var url = $('#url').val(),
-        url = url === '' ? location.href : url.replace(/^[\s\u3000]+|[\s\u3000]+$/g, ''),
-        img = createQrcode(url);
-    $('#preview')
-      .empty()
-      .append(img);
-    $('#qrcode')
-      .find('img').replaceWith(img)
-      .end().find('p').text($('#label').val());
+    var url = $('#url').val();
+    url = url === '' ? location.href : url.replace(/^[\s\u3000]+|[\s\u3000]+$/g, '');
+    var data = {
+      img: createQrcode(url),
+      title: $('#label').val()
+    };
+    $('#preview').html(inline(data));
+    $('#qrcode').html(fixed(data));
   }
   function refreshCode() {
     if (template === null) {
@@ -31,47 +30,42 @@ $(function () {
     $('#output').val(template(context));
   }
 
+  var inline = Handlebars.compile($('#preview').find('script').html())
+    , fixed = Handlebars.compile($('#qrcode').find('script').html());
+
   $('form')
-    .on('click', '.preview-button', function (event) {
+    .on('submit', function (event) {
       refreshPreview();
       refreshCode();
+      event.preventDefault();
     })
-    .on('click', '.target-button', function (event) {
-      $('form')
-        .removeClass('dom float')
+    .on('change', '[name=position]', function () {
+      $('body')
+        .removeClass('inline fixed')
         .addClass(this.value);
-      if (this.value === 'dom') {
-        $('#preview').show();
-        $('#qrcode').remove();
-        $('#preview-pos').addClass('hide');
-      } else {
-        var qrcode = $('<div id="qrcode" class="qrcode"></div>');
-        qrcode
-          .append($('#preview').children().clone())
-          .append('<p align="center">' + $('#label').val() + '</p>')
-          .appendTo('body');
-        $('#preview').hide();
-        $('#preview-pos').removeClass('hide');
-      }
       setTimeout(refreshCode, 10);
     })
     .on('change', '#width', function (event) {
       var width = this.value * 33;
-      $(this).closest('.controls').find('.help-block span').text(width + '×' + width);
+      $('#canvas-size').text(width + '×' + width);
     })
-    .on('change', 'input', function (event) {
+    .on('change', '[name=url], [name=width]', function () {
       refreshPreview();
       refreshCode();
     });
   
   // 处理剪切板
-  ZeroClipboard.setMoviePath("./swf/ZeroClipboard.swf");
-  var clip = new ZeroClipboard.Client("#copy-button");
-  clip.on('mouseup', function (event) {
-    clip.setText($('#output').val());
-  });
-  clip.on('complete', function (event) {
-    alert('复制成功');
+  var clip = new ZeroClipboard(document.getElementById('copy-button'));
+  clip.on('aftercopy', function () {
+    $('#copy-button')
+      .tooltip({
+        placement: 'right',
+        trigger: 'manual'
+      })
+      .tooltip('show');
+    setTimeout(function () {
+      $('#copy-button').tooltip('hide');
+    }, 3000);
   });
 
   // 生成默认二维码
@@ -79,14 +73,10 @@ $(function () {
   
   // 加载输出模版
   var template;
-  $.ajax({
-    url: './templates/output.html',
-    dataType: 'html',
-    success: function (response) {
-      template = Handlebars.compile(response);
-      refreshCode();
-    }
-  });
+  $.get('./templates/output.hbs', function (response) {
+    template = Handlebars.compile(response);
+    refreshCode();
+  },  'html');
 });
 
 

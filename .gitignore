@@ -1,2 +1,10 @@
+# IDE
 nbproject
+.idea
+
+# build
 bin
+.sass-cache
+
+# repo
+bower_components

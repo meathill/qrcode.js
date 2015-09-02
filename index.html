@@ -3,148 +3,160 @@
 配置生成一段js，复制到页面当中，就可以给页面添加一个二维码的图了
 -->
 <!DOCTYPE html>
-<title>肉山 | 二维码</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="keywords" content="二维码,生成工具,开源,肉山" />
-<meta name="description" content="这是个方便的小工具，提供所见即所得的操作界面，不仅能够控制生成二维码，还可以调整页面布局，方便使用。最终只需要将生成的JS代码复制到您的页面当中，就完成了。">
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet" />
-<link href="css/qrcode.css" rel="stylesheet" />
-<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
-<script src="libs/handlebars.js"></script>
-<script src="libs/ZeroClipboard.min.js"></script>
-<script src="libs/qrcode.js"></script>
-<script src="js/main.js"></script>
-<script type="text/javascript">
+<head>
+  <title>肉山 | 二维码</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="keywords" content="二维码,生成工具,开源,肉山" />
+  <meta name="description" content="这是个方便的小工具，提供所见即所得的操作界面，不仅能够控制生成二维码，还可以调整页面布局，方便使用。最终只需要将生成的JS代码复制到您的页面当中，就完成了。">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/screen.css" />
+  <link rel="stylesheet" href="css/qrcode.css" />
+</head>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-26694288-2']);
-  _gaq.push(['_trackPageview']);
+<body class="inline">
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
-<div class="navbar">
-  <div class="navbar-inner">
-    <a class="brand" href="http://blog.meathill.net/">肉山 | 二维码</a>
-    <ul class="nav">
-      <li><a href="#custom-style" data-toggle="modal">定制样式</a></li>
-      <li><a href="http://meathill.github.com/qrcode.js">源代码</a></li>
-    </ul>
-    <ul class="nav pull-right">
-      <li><a href="https://github.com/meathill/qrcode.js/issues">Version 0.2.@version@</a></li>
+<nav class="navbar navbar-light bg-faded">
+  <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar">
+    &#9776;
+  </button>
+  <div class="container collapse navbar-toggleable-xs" id="navbar">
+    <a class="navbar-brand" href="http://blog.meathill.net/">肉山 | 二维码 v0.3</a>
+    <ul class="nav navbar-nav">
+      <li class="nav-item"><a href="#custom-style" data-toggle="modal" class="nav-link">定制样式</a></li>
+      <li class="nav-item"><a href="http://meathill.github.com/qrcode.js" class="nav-link">Github</a></li>
     </ul>
   </div>
-</div>
+</nav>
 
-<div class="container ">
-  <div class="hero-unit">
+<div class="container">
+  <div class="jumbotron">
     <h1>二维码JS代码生成器</h1>
     <p>完成后面的表单，把文本框的代码复制到页面中即可。</p>
   </div>
   <div class="row">
-    <div class="span4 well">
-      <h3>结果代码</h3>
-      <textarea id="output" readonly="readonly" rows="6">
-加载HTML模版
-      </textarea>
-      <button type="button" class="btn btn-success" id="copy-button" title="将生成的代码复制到剪切板"><i class="icon-file icon-white"></i> 复制到剪切板</button>
+    <div class="col-sm-4 col-xs-12 well">
+      <h2>结果代码</h2>
+      <div class="form-group">
+        <textarea id="output" readonly="readonly" rows="6" class="form-control" title="结果代码">
+  加载HTML模版
+        </textarea>
+      </div>
+      <button type="button" class="btn btn-success" title="复制成功" data-clipboard-target="output" id="copy-button"><i class="fa fa-clipboard"></i> 复制到剪切板</button>
       <hr />
       <h3>预览</h3>
-      <span class="text-info hide" id="preview-pos">（位于右上角）</span>
-      <p id="preview">
-
+      <span class="text-info invisible" id="preview-pos">（位于右上角）</span>
+      <p id="preview" class="inline">
+        <script type="text/x-handlebars-template">
+          {{{img}}}
+        </script>
       </p>
     </div>
-    <div class="span8">
-      <form class="form-horizontal dom">
-        <legend>二维码基础设置</legend>
-        <div class="control-group">
-          <label class="control-label" for="url">链接</label>
-          <div class="controls">
-            <input type="text" name="url" id="url" class="input-xlarge" />
-            <p class="help-block">
-              留空的话，将使用嵌入页面的URL生成二维码
-            </p>
+    <form class="form-horizontal dom col-sm-8 col-xs-12">
+      <h2>二维码基础设置</h2>
+      <div class="form-group row">
+        <label class="col-sm-2 form-control-label" for="url">链接</label>
+        <div class="col-sm-10">
+          <input name="url" id="url" class="form-control" />
+          <p class="help-block">
+            留空的话，将使用嵌入页面的URL生成二维码
+          </p>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 form-control-label" for="width">描点大小</label>
+        <div class="col-sm-10">
+          <div class="input-group">
+            <input type="number" name="width" id="width" class="form-control" value="4" min="1" max="16" />
+            <span class="input-group-addon">像素</span>
+          </div>
+          <p class="help-block">
+            图像尺寸 = 点大小 * 33，当前为<span id="canvas-size">132&times;132</span>
+          </p>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 form-control-label">位置设定</label>
+        <div class="col-sm-10">
+          <div class="btn-group select-button">
+            <input type="radio" name="position" checked value="inline" id="position-inline">
+            <label class="btn btn-secondary" for="position-inline">
+               页面元素
+            </label>
+            <input type="radio" name="position" value="fixed" id="position-fixed">
+            <label class="btn btn-secondary" for="position-fixed">
+               独立浮动
+            </label>
+          </div>
+          <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert" aria-label="关闭">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">关闭</span>
+            </button>
+            选择“页面元素”，意味着您希望把二维码插入到页面某特定位置，此时您需要提供容器元素的ID；<br />
+            选择“独立浮动”，程序会帮你创建一个浮动层，置于页面右上角，并把二维码放在里面。
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="width">描点大小</label>
-          <div class="controls">
-            <div class="input-append">
-              <input type="number" name="width" id="width" class="input-small" value="4" />
-              <span class="add-on">像素</span>
-            </div>
-            <p class="help-block">
-              图像尺寸 = 点大小 * 33，当前为<span>132&times;132</span>
-            </p>
-          </div>
+      </div>
+      <div class="row form-group inline">
+        <label class="col-sm-2 form-control-label" for="target">容器ID</label>
+        <div class="col-sm-10">
+          <input name="target" id="target" class="form-control" placeholder="目标容器ID，如“qrcode”" />
+          <p class="help-block">
+            插入二维码图片的页面元素的ID，不需要“#”
+          </p>
         </div>
-        <div class="control-group">
-          <label class="control-label">位置设定</label>
-          <div class="controls">
-            <div class="btn-group" data-toggle="buttons-radio">
-              <button type="button" class="btn active target-button" value="dom">页面元素</button>
-              <button type="button" class="btn target-button" value="float">独立浮动</button>
-            </div>
-            <div class="alert alert-success">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              选择“页面元素”，意味着您希望把二维码插入到页面某特定位置，此时您需要提供容器元素的ID；<br />
-              选择“独立浮动”，程序会帮你创建一个浮动层，置于页面右上角，并把二维码放在里面。
-            </div>
-          </div>
+      </div>
+      <div class="row form-group fixed">
+        <label class="col-sm-2 form-control-label" for="label">文字描述</label>
+        <div class="col-sm-10">
+          <input name="label" id="label" class="form-control" placeholder="如“请扫描二维码”。" />
+          <p class="help-block">
+            浮动二维码图片下方的文字。
+          </p>
         </div>
-        <div class="control-group dom">
-          <label class="control-label" for="target">容器ID</label>
-          <div class="controls">
-            <input type="text" name="target" id="target" class="input-xlarge" value="target" />
-            <p class="help-block">
-              插入二维码图片的页面元素的ID，不需要“#”
-            </p>
-          </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button class="btn btn-primary"><i class="fa fa-refresh"></i> 刷新预览图</button>
         </div>
-        <div class="control-group float">
-          <label class="control-label" for="label">文字描述</label>
-          <div class="controls">
-            <input type="text" name="label" id="label" class="input-large" value="请扫描二维码" />
-            <p class="help-block">
-              浮动二维码图片下方的文字。
-            </p>
-          </div>
-        </div>
-        <div class="form-actions">
-          <button type="button" class="btn btn-primary preview-button"><i class="icon-refresh icon-white"></i> 刷新预览图</button>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
 
-<div class="modal-cave">
-  <div class="modal fade hide" id="custom-style">
-    <div class="modal-header">
-      <button class="close" type="button" data-dismiss="modal">&times</button>
-      <h3>如何定制样式</h3>
-    </div>
-    <div class="modal-body">
-      <p>插入页面中的二维码会包裹在特定HTML当中，所以如果需要定制样式，可以用在CSS当中使用特定的class和id做到。</p>
-      <h4>页面元素</h4>
-      <p><code>&lt;img class="qrcode" /&gt;</code></p>
-      <h4>独立浮动</h4>
-      <p>
-        <code>&lt;div class="qrcode" id="qrcode-n"&gt;....&lt;/div&gt;</code><br />
-        （-n的n为序号，为自然数，按照添加的顺序自增）
-      </p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-dismiss="modal">好的，知道了</button>
+<div id="qrcode" class="meat-qrcode fixed">
+  <script type="text/x-handlebars-template">
+    {{{img}}}
+    <p>{{title}}</p>
+  </script>
+</div>
+
+<div class="modal fade" id="custom-style">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal" aria-label="关闭">
+          <span aria-hidden="true">&times</span>
+          <span class="sr-only">关闭</span>
+        </button>
+        <h4 class="modal-title">如何定制样式</h4>
+      </div>
+      <div class="modal-body">
+        <p>插入页面中的二维码会包裹在特定HTML当中，所以如果需要定制样式，可以用在CSS当中使用特定的class和id做到。</p>
+        <h4>页面元素</h4>
+        <p><code>&lt;img class="meat-qrcode" /&gt;</code></p>
+        <h4>独立浮动</h4>
+        <p>
+          <code>&lt;div class="meat-qrcode" id="qrcode-n"&gt;....&lt;/div&gt;</code><br />
+          （-n的n为序号，为自然数，按照添加的顺序自增）
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">好的，知道了</button>
+      </div>
     </div>
   </div>
 </div>
@@ -152,11 +164,31 @@
 <footer class="container">
   <hr />
   <p class="pull-right">
-    <a href="https://me.alipay.com/meathill" target="_blank" title="化缘入口"><i class="icon-heart"></i> Donate</a>
+    <a href="//blog.meathill.com/" target="_blank" title="山维空间"><i class="fa fa-share"></i> Blog</a>
     &nbsp;
-    <a href="//blog.meathill.net/" target="_blank" title="山维空间"><i class="icon-share"></i> Blog</a>
-    &nbsp;
-    <a href="mailto:meathill@foxmail.com"><i class="icon-envelope"></i> Email</a>
+    <a href="mailto:meathill@foxmail.com"><i class="fa fa-envelope"></i> Email</a>
   </p>
-  <p>&copy; Meathill 2013</p>
+  <p>&copy; Meathill 2015</p>
 </footer>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.0/handlebars.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/tether/0.7.2/tether.min.js"></script>
+<script src="libs/qrcode.js"></script>
+<script src="js/main.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o);m=m[m.length - 1];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-26694288-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</body>

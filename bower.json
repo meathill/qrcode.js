@@ -1,0 +1,26 @@
+{
+  "name": "qrcode",
+  "version": "0.3.0",
+  "homepage": "https://github.com/meathill/qrcode.js",
+  "authors": [
+    "Meathill <meathill@gmail.com>"
+  ],
+  "description": "qrcode creator",
+  "main": "index.html",
+  "keywords": [
+    "qrcode",
+    "js",
+    "template"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "4.0.0-alpha"
+  }
+}
