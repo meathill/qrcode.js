@@ -1,0 +1,29 @@
+{
+  "name": "qrcode.js",
+  "version": "0.3.0",
+  "description": "tool for create qrcode",
+  "main": "index.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meathill/qrcode.js.git"
+  },
+  "keywords": [
+    "qrcode"
+  ],
+  "author": "Meathill <meathill@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meathill/qrcode.js/issues"
+  },
+  "homepage": "https://github.com/meathill/qrcode.js#readme",
+  "devDependencies": {
+    "del": "^2.0.1",
+    "gulp": "^3.9.0"
+  }
+}

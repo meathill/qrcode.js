@@ -3,8 +3,9 @@ nbproject
 .idea
 
 # build
-bin
+dest
 .sass-cache
 
 # repo
 bower_components
+node_modules
