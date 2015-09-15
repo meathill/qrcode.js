@@ -73,7 +73,7 @@ $(function () {
   
   // 加载输出模版
   var template;
-  $.get('./templates/output.hbs', function (response) {
+  $.get('./template/output.hbs', function (response) {
     template = Handlebars.compile(response);
     refreshCode();
   },  'html');
