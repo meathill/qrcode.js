@@ -73,10 +73,11 @@ $(function () {
   
   // 加载输出模版
   var template;
-  $.get('./template/output.hbs', function (response) {
-    template = Handlebars.compile(response);
-    refreshCode();
-  },  'html');
+  $.get('./template/output.hbs')
+    .then(function (response) {
+      template = Handlebars.compile(response);
+      refreshCode();
+    });
 });
 
 
