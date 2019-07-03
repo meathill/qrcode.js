@@ -32,8 +32,7 @@ gulp.task('js', function () {
   return gulp.src(['js/qrcode.js', 'js/app.js'])
     .pipe(concat('app.js'))
     .pipe(uglify())
-    .pipe(gulp.dest(BIN + 'js/'))
-    .pipe(size());
+    .pipe(gulp.dest(BIN + 'js/'));
 });
 
 gulp.task('external', function () {
