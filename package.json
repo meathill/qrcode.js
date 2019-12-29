@@ -22,18 +22,13 @@
     "url": "https://github.com/meathill/qrcode.js/issues"
   },
   "homepage": "https://qrcode.meathill.com/",
-  "devDependencies": {
-    "del": "^3.0.0",
-    "gulp": "^4.0.2",
-    "gulp-htmlmin": "^5.0.1",
-    "gulp-replace": "^1.0.0"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "font-awesome": "^4.7.0",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.5.3",
     "jquery": "^3.4.1",
-    "popper.js": "^1.15.0",
+    "popper.js": "^1.16.0",
     "zeroclipboard": "^2.3.0"
   }
 }
