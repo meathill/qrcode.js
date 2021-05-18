@@ -24,11 +24,8 @@
   "homepage": "https://qrcode.meathill.com/",
   "devDependencies": {},
   "dependencies": {
-    "bootstrap": "^4.5.0",
-    "font-awesome": "^4.7.0",
-    "handlebars": "^4.7.6",
-    "jquery": "^3.5.1",
-    "popper.js": "^1.16.1",
-    "zeroclipboard": "^2.3.0"
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1"
   }
 }
